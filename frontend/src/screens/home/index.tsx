@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+
 import { SWATCHES } from "@/constants";
 import { ColorSwatch, Group } from "@mantine/core";
 import { Button } from "@/components/ui/button";
@@ -102,6 +103,18 @@ const Home = () => {
       }
     }
   };
+  const startDrawingTouch = (e: any) => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.style.background = "black";
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.beginPath();
+        ctx.moveTo(e.touches[0].pageX, e.touches[0].pageY);
+        setIsDrawing(true);
+      }
+    }
+  };
 
   const stopDrawing = () => {
     setIsDrawing(false);
@@ -121,7 +134,20 @@ const Home = () => {
       }
     }
   };
-
+  const drawTouch = (e: any) => {
+    if (!isDrawing) {
+      return;
+    }
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.strokeStyle = color;
+        ctx.lineTo(e.touches[0].pageX, e.touches[0].pageY);
+        ctx.stroke();
+      }
+    }
+  };
   const resetCanvas = () => {
     const canvas = canvasRef.current;
     if (canvas) {
@@ -227,8 +253,8 @@ const Home = () => {
         id="canvas"
         className="absolute top-0 left-0 w-full h-full"
         onMouseDown={startDrawing}
-        onTouchStart={startDrawing}
-        onTouchMove={draw}
+        onTouchStart={startDrawingTouch}
+        onTouchMove={drawTouch}
         onTouchEnd={stopDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
