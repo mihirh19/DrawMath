@@ -91,7 +91,7 @@ const Home = () => {
       }
     }
   };
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const startDrawing = (e: any) => {
     const canvas = canvasRef.current;
     if (canvas) {
       canvas.style.background = "black";
@@ -108,7 +108,7 @@ const Home = () => {
     setIsDrawing(false);
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const draw = (e: any) => {
     if (!isDrawing) {
       return;
     }
@@ -228,6 +228,9 @@ const Home = () => {
         id="canvas"
         className="absolute top-0 left-0 w-full h-full"
         onMouseDown={startDrawing}
+        onTouchStart={startDrawing}
+        onTouchMove={draw}
+        onTouchEnd={stopDrawing}
         onMouseMove={draw}
         onMouseUp={stopDrawing}
         onMouseOut={stopDrawing}
