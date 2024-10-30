@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import React from "react";
 import { SWATCHES } from "@/constants";
 import { ColorSwatch, Group } from "@mantine/core";
 import { Button } from "@/components/ui/button";
